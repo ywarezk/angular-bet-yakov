@@ -9,6 +9,10 @@ class Person {
         console.log(this);
     }
 
+    sayHello3 = (arg1: string) => {
+
+    }
+
     // public firstName: string = 'Yariv';
     // public lastName: string = 'Katz';
 
@@ -98,5 +102,6 @@ interface IHasToHaveAge {
 class Child extends Person implements IHasToHaveAge {
     public age: number = 30;
 }
+
 
 

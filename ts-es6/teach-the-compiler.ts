@@ -13,7 +13,18 @@
 
 
 /// teach the compiler
-/// tsconfig
+/// prefer this way
+/// tsconfig through the lib
+
+/// teach the compiler
+/// second best way
+/// type annotation
+
+/// use npm to teach the compiler
+
+/// npm install @types/<name of package> --save-dev
+
+
 
 
 
