@@ -15,6 +15,20 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@nz/forms": [
+        "dist/nz/forms"
+      ],
+      "@nz/forms/*": [
+        "dist/nz/forms/*"
+      ],
+      "@nz/payment": [
+        "dist/nz/payment"
+      ],
+      "@nz/payment/*": [
+        "dist/nz/payment/*"
+      ]
+    }
   }
 }

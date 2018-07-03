@@ -1,0 +1,39 @@
+<app-header></app-header>
+<app-child></app-child>
+<app-footer></app-footer>
+
+<h1>
+  Communication between components
+</h1>
+
+<h2>
+  Input
+</h2>
+
+<p>
+  {{title}}
+  one way binding from class to template
+  one way without sideeffect!!
+  run quickly
+</p>
+
+<app-child [message]="title"></app-child>
+
+<h2>
+  Output
+</h2>
+
+<p>
+  expression with sideeffects
+</p>
+
+<button (click)="title=$event.target.innerText">
+  click me
+</button>
+
+<app-child (buttonClicked)="title=$event"></app-child>
+
+<h2>
+  Service
+</h2>
+
