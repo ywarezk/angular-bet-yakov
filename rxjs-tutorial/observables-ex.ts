@@ -1,4 +1,5 @@
-import { Observer, Observable, Subscription } from 'rxjs';
+import { Observer, Observable, Subscription, Subject, interval, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 // rxjs
 
@@ -111,9 +112,94 @@ setTimeout(() => {
 }, 3000);
 
 
+// subject
+
+// represents data stream
+// 1 data stream for multiple listensers
+// not wrapping the async funciton
+// define pulses from outside
+
+// every one sec pulse of counter
+
+let counter = 0;
+const intervalSubject: Subject<number> = new Subject();
 
 
+setInterval(() => {
+    if (counter < 5) {
+        intervalSubject.next(counter);
+    } else {
+        intervalSubject.complete();
+    }
+
+    counter++
+}, 1000);
+
+intervalSubject.subscribe(function next(counter: number) {
+    console.log(`subject listener1: ${counter}`);
+}, function error() {
+    console.log('error listener1')
+}, function complete() {
+    console.log('complete listener1')
+})
+
+const singleSubscirptionObject: Subscription = intervalSubject.subscribe(function(counter: number) {
+    console.log(`subject listener2: ${counter}`);
+}, function error() {
+    console.log('error listener2')
+}, function complete() {
+    console.log('complete listener2')
+});
+
+// intervalSubject.unsubscribe() // will cancel all listener
+// singleSubscirptionObject.unsubscribe() // will cancel only one connection
+
+// operators
+/// operator create data stream 
+/// operator can manipulate data stream
+
+/// create observable from operator
+
+// createOperator(arguments) : Observable<...>
+// interval(1000).subscribe(function(count: number) {
+//     console.log(`this is from interval operator ${count}`)
+// }); // Observalbe<number>
+// create operators the import is from 'rxjs'
+
+/// manipuate data stream
+// myObservable.pipe(
+//     map(),
+//     mergeMap(),
+//     distinctUntilChanged(),
+//     operator4(),
+//     operator5()
+// )
+
+// npm install rxjs-compat --save-dev
+// backward compatability from rxjs5 to rxjs6
+
+const myHelloObservable: Observable<string> = interval(1000).pipe(
+    map((counter: number) => 'hello')
+)
 
 
+interface ITodo {
+    title: string;
+}
 
+
+const sub4: Subject<number> = new Subject();
+const sub5: Subject<string> = new Subject();
+
+combineLatest(sub4, sub5).subscribe((arrayOfSub4AndSub5: Array<string | number>) => {
+    console.log('so this operator takes the latest from each data stream');
+    console.log(arrayOfSub4AndSub5);
+})
+
+sub4.next(0);
+sub4.next(1);
+sub4.next(2);
+
+sub5.next('hello');
+sub5.next('world');
 

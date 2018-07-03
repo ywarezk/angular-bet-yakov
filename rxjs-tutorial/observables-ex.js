@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var rxjs_1 = require("rxjs");
+var operators_1 = require("rxjs/operators");
 // rxjs
 /// observer
 /// observable
@@ -85,3 +86,67 @@ var sub3 = myIntervalObservable.subscribe(function (counter) {
 setTimeout(function () {
     sub2.unsubscribe();
 }, 3000);
+// subject
+// represents data stream
+// 1 data stream for multiple listensers
+// not wrapping the async funciton
+// define pulses from outside
+// every one sec pulse of counter
+var counter = 0;
+var intervalSubject = new rxjs_1.Subject();
+setInterval(function () {
+    if (counter < 5) {
+        intervalSubject.next(counter);
+    }
+    else {
+        intervalSubject.complete();
+    }
+    counter++;
+}, 1000);
+intervalSubject.subscribe(function next(counter) {
+    console.log("subject listener1: " + counter);
+}, function error() {
+    console.log('error listener1');
+}, function complete() {
+    console.log('complete listener1');
+});
+var singleSubscirptionObject = intervalSubject.subscribe(function (counter) {
+    console.log("subject listener2: " + counter);
+}, function error() {
+    console.log('error listener2');
+}, function complete() {
+    console.log('complete listener2');
+});
+// intervalSubject.unsubscribe() // will cancel all listener
+// singleSubscirptionObject.unsubscribe() // will cancel only one connection
+// operators
+/// operator create data stream 
+/// operator can manipulate data stream
+/// create observable from operator
+// createOperator(arguments) : Observable<...>
+// interval(1000).subscribe(function(count: number) {
+//     console.log(`this is from interval operator ${count}`)
+// }); // Observalbe<number>
+// create operators the import is from 'rxjs'
+/// manipuate data stream
+// myObservable.pipe(
+//     map(),
+//     mergeMap(),
+//     distinctUntilChanged(),
+//     operator4(),
+//     operator5()
+// )
+// npm install rxjs-compat --save-dev
+// backward compatability from rxjs5 to rxjs6
+var myHelloObservable = rxjs_1.interval(1000).pipe(operators_1.map(function (counter) { return 'hello'; }));
+var sub4 = new rxjs_1.Subject();
+var sub5 = new rxjs_1.Subject();
+rxjs_1.combineLatest(sub4, sub5).subscribe(function (arrayOfSub4AndSub5) {
+    console.log('so this operator takes the latest from each data stream');
+    console.log(arrayOfSub4AndSub5);
+});
+sub4.next(0);
+sub4.next(1);
+sub4.next(2);
+sub5.next('hello');
+sub5.next('world');
