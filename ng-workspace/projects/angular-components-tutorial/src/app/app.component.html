@@ -37,3 +37,95 @@
   Service
 </h2>
 
+<p>
+  ng g s Todo
+  sign it in providers array
+  i can ask for this service in the constructor
+  i can transfer info from service to different components
+</p>
+
+<h2>
+  Template Reference Variable
+</h2>
+
+{{thisIsInstanceOfP.innerText}}
+
+<p id="hello" #thisIsInstanceOfP>
+  {{thisIsInstanceOfP.id}}
+</p>
+
+<app-child #instanceOfChild="nameDefinedInChild"></app-child>
+
+{{instanceOfChild.sayHello()}}
+
+<input type="text" [(ngModel)]="title" #thisShouldBeNgModel="ngModel" />
+
+{{thisShouldBeNgModel.errors}}
+{{thisShouldBeNgModel.dirty}}
+{{thisShouldBeNgModel.touched}}
+
+<h2>
+  ViewChild
+</h2>
+
+<p>
+  we grab instance from template to class
+  communicate with the instance
+  the active is the parent
+</p>
+
+<h2>
+  Transclusion
+</h2>
+
+<p>
+  transfer block of template to child
+</p>
+
+<app-child>
+  <div header>
+      <h1>
+          hello from parent {{title}}
+        </h1>
+        <p>
+          hello message 2
+        </p>
+  </div>
+  <div footer>
+    <app-grand-child></app-grand-child>
+    <p>
+      this should be in the footer
+    </p>
+  </div>
+  
+</app-child>
+
+<h2>
+  @ContentChild
+</h2>
+
+
+
+{{randomNumber()}}
+
+<h2>
+  dynamic component 
+</h2>
+
+<p>
+  1 . where to put the component
+  2. factory of the component i want to create
+</p>
+
+<p>
+  1. where to put component
+  ViewContainerRef
+</p>
+
+<div #divContainerForComponent>
+  
+</div>
+
+
+
+
