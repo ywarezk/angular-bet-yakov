@@ -1,7 +1,10 @@
+import 'zone.js/dist/zone-node';
+import 'reflect-metadata';
 import { enableProdMode } from '@angular/core';
-
 import { environment } from './environments/environment';
 import * as express from 'express';
+import {ngExpressEngine} from '@nguniversal/express-engine';
+import { AppServerModule } from './app/app.server.module';
 
 
 declare var __dirname: any;
@@ -13,15 +16,36 @@ if (environment.production) {
   enableProdMode();
 }
 
-export { AppServerModule } from './app/app.server.module';
-
-
 const app = express();
 
 const pathOfBrowserStatic = path.resolve(__dirname, '../ssr-tutorial');
 console.log(pathOfBrowserStatic);
 
-app.use(express.static(pathOfBrowserStatic));
+// express templates
+
+// we can connect different template language
+// express we can choose what templating language to use
+// express can read html like template replace data present full html page
+
+app.engine('html', ngExpressEngine({
+  bootstrap: AppServerModule
+}));
+
+// app.set is used for express configuration
+// set view engine sets which view engine we want to use from the engines we loaded
+// set views which directory are templates are located
+app.set('view engine', 'html');
+app.set('views', pathOfBrowserStatic);
+
+// loading a template engine adds command to response: res.render()
+
+app.use('*.*', express.static(pathOfBrowserStatic));
+
+app.get('*', function(req, res, next) {
+  res.render('index', {
+    req: req
+  })
+})
 
 // /about
 // /about.js
@@ -41,7 +65,7 @@ app.use(express.static(pathOfBrowserStatic));
 // });
 
 app.listen(3001, function() {
-  console.log('my server is now listening on port 3000');
+  console.log('my server is now listening on port 3001');
 })
 
 // express
