@@ -7,7 +7,7 @@ declare var Ladda: any;
 @Directive({
   selector: '[ladda]'
 })
-export class LaddaDirective implements OnInit {
+export class LaddaDirective {
   @Input('ladda') set isLoading(value: boolean) {
     if (isPlatformBrowser(this._platformId)) {
       if (!this._ladda) {
@@ -26,9 +26,4 @@ export class LaddaDirective implements OnInit {
   constructor(private _buttonElement: ElementRef, @Inject(PLATFORM_ID) private _platformId: Object) {
     
   }
-
-  ngOnInit() {
-    
-  }
-
 }

@@ -1,0 +1,16 @@
+<p>
+  hello child2 {{isCD()}}
+</p>
+<app-gran2></app-gran2>
+
+<button (click)="stamClick()">Is running change detection</button>
+
+<h2>
+  async pipe
+</h2>
+
+<!-- {{myDate | date:'dd-mm'}}
+
+{{complexObject | json}} -->
+
+{{ serverRequest | async | json }}
