@@ -1,0 +1,12 @@
+<p>
+  home-page works!
+</p>
+
+<form (ngSubmit)="search()">
+  <div class="form-group">
+    <label>
+      Search
+    </label>
+    <input type="text" name="search" class="form-control" [(ngModel)]="searchString" (input)="search()" />
+  </div>
+</form>
